@@ -79,6 +79,10 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
+  environment.shellAliases = {
+    gst = "git status";
+  }
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.dane = {
     isNormalUser = true;
