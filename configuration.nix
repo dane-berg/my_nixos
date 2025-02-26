@@ -80,6 +80,7 @@
   # services.xserver.libinput.enable = true;
 
   environment.shellAliases = {
+    gch = "git checkout";
     gst = "git status";
   };
 
