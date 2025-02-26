@@ -82,8 +82,13 @@
 
   environment.shellAliases = {
     gch = "git checkout";
+    gd = "git diff";
+    gl = "git log";
+    glp = "git log -p";
+    gp = "git push";
     gpf = "git push --force-with-lease";
     gst = "git status";
+    rbnix = "~/../nixos/rebuild-nixos.sh";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -108,9 +113,10 @@
     alejandra
     discord
     git
-    obsidian
+    libnotify
     nano
     nodejs
+    obsidian
     sublime
     vscode
   ];
