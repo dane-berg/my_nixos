@@ -89,6 +89,7 @@
     gpf = "git push --force-with-lease";
     gst = "git status";
     rbnix = "~/../nixos/rebuild-nixos.sh";
+    subl = "sublime";
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -115,6 +116,7 @@
     git
     libnotify
     nano
+    neofetch
     nodejs
     obsidian
     sublime
