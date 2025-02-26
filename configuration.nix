@@ -4,6 +4,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: {
   imports = [
@@ -83,11 +84,14 @@
   environment.shellAliases = {
     gch = "git checkout";
     gd = "git diff";
+    gdc = "git diff --cached";
     gl = "git log";
     glp = "git log -p";
     gp = "git push";
     gpf = "git push --force-with-lease";
     gst = "git status";
+    # gsw = "git checkout master-stable && git pull && git checkout";
+    # rbm = "git fetch origin master && git rebase origin/master";
     rbnix = "~/../nixos/rebuild-nixos.sh";
     subl = "sublime";
   };
@@ -111,6 +115,7 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    inputs.nix-vscode-extensions.extensions.x86_64-linux.open-vsx.esbenp.prettier-vscode
     alejandra
     discord
     git
@@ -120,7 +125,7 @@
     nodejs
     obsidian
     sublime
-    vscode
+    vscodium
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
