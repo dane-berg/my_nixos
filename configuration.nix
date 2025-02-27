@@ -115,17 +115,20 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    inputs.nix-vscode-extensions.extensions.x86_64-linux.open-vsx.esbenp.prettier-vscode
     alejandra
     discord
     git
     libnotify
-    nano
     neofetch
     nodejs
     obsidian
     sublime
-    vscodium
+    (vscode-with-extensions.override {
+      vscode = vscodium;
+      vscodeExtensions = with inputs.nix-vscode-extensions.extensions.x86_64-linux.open-vsx; [
+        esbenp.prettier-vscode
+      ];
+    })
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
