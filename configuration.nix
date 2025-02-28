@@ -132,6 +132,8 @@
     })
   ];
 
+  environment.variables.EDITOR = "sublime";
+
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     users = {
