@@ -10,6 +10,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./modules/personal.nix
   ];
 
   # Bootloader.
@@ -92,7 +93,7 @@
     gst = "git status";
     # gsw = "git checkout master-stable && git pull && git checkout";
     # rbm = "git fetch origin master && git rebase origin/master";
-    rbnix = "~/../nixos/rebuild-nixos.sh";
+    rbnix = "/etc/nixos/rebuild-nixos.sh";
     subl = "sublime";
   };
 
@@ -116,12 +117,11 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alejandra
-    discord
     git
+    home-manager
     libnotify
     neofetch
     nodejs
-    obsidian
     sublime
     (vscode-with-extensions.override {
       vscode = vscodium;
