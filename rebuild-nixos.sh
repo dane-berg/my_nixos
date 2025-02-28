@@ -1,22 +1,25 @@
 #!/usr/bin/env bash
-#
-# I believe there are a few ways to do this:
-#
-#    1. My current way, using a minimal /etc/nixos/configuration.nix that just imports my config from my home directory (see it in the gist)
-#    2. Symlinking to your own configuration.nix in your home directory (I think I tried and abandoned this and links made relative paths weird)
-#    3. My new favourite way: as @clot27 says, you can provide nixos-rebuild with a path to the config, allowing it to be entirely inside your dotfies, with zero bootstrapping of files required.
-#       `nixos-rebuild switch -I nixos-config=path/to/configuration.nix`
-#    4. If you uses a flake as your primary config, you can specify a path to `configuration.nix` in it and then `nixos-rebuild switch —flake` path/to/directory
-# As I hope was clear from the video, I am new to nixos, and there may be other, better, options, in which case I'd love to know them! (I'll update the gist if so)
-
+# Forked from https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5
 # A rebuild script that commits on a successful build
 set -e
 
 # cd to your config dir
 pushd /etc/nixos/
 
-# Edit your config
-$EDITOR configuration.nix
+# Check if at least one file is provided as an argument
+if [ $# -eq 0 ]; then
+  # Default to editing main config
+  $EDITOR configuration.nix
+else
+  for file in "$@"; do
+  	  if [ -f "$file" ]; then
+	    echo "Editing file: $file"
+        $EDITOR "$file"
+	  else
+	    echo "Skipping non-existent or invalid file: $file"
+	  fi
+  done
+fi
 
 # Early return if no changes were detected (thanks @singiamtel!)
 if git diff --quiet; then

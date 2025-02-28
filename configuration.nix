@@ -93,7 +93,7 @@
     gst = "git status";
     # gsw = "git checkout master-stable && git pull && git checkout";
     # rbm = "git fetch origin master && git rebase origin/master";
-    rbnix = "/etc/nixos/rebuild-nixos.sh";
+    rbnix = "~/../../etc/nixos/rebuild-nixos.sh";
     subl = "sublime";
   };
 
