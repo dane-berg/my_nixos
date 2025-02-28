@@ -69,9 +69,6 @@
   #
   #  /etc/profiles/per-user/dane/etc/profile.d/hm-session-vars.sh
   #
-  home.sessionVariables = {
-    EDITOR = "sublime";
-  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
