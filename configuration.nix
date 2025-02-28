@@ -10,6 +10,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    inputs.home-manager.nixosModules.home-manager
     ./modules/personal.nix
   ];
 
@@ -93,7 +94,7 @@
     gst = "git status";
     # gsw = "git checkout master-stable && git pull && git checkout";
     # rbm = "git fetch origin master && git rebase origin/master";
-    rbnix = "~/../../etc/nixos/rebuild-nixos.sh";
+    rbnix = "/etc/nixos/rebuild-nixos.sh";
     subl = "sublime";
   };
 
@@ -130,6 +131,13 @@
       ];
     })
   ];
+
+  home-manager = {
+    extraSpecialArgs = {inherit inputs;};
+    users = {
+      "dane" = import ./home.nix;
+    };
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
