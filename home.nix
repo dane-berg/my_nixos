@@ -90,6 +90,8 @@
       };
       # TODO: try other search engines
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        # explore using; nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"
+        darkreader
         onepassword-password-manager
         ublock-origin
       ];

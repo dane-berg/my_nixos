@@ -36,7 +36,7 @@ alejandra modules/ &>/dev/null \
   || ( alejandra . ; echo "formatting failed!" && exit 1)
 
 # Adds and shows your changes
-git diff --cached -U0 HEAD
+git diff -U0 HEAD
 
 echo "NixOS Rebuilding..."
 
