@@ -102,10 +102,11 @@
     subl = "sublime";
   };
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.dane = {
+  # Define a user account.
+  # TODO: Don't forget to set a password with ‘passwd’.
+  users.users.daneb = {
     isNormalUser = true;
-    description = "Dane";
+    description = "Dane Bergman";
     extraGroups = ["networkmanager" "wheel"];
     packages = with pkgs; [
       #  thunderbird
@@ -119,7 +120,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     alejandra
-    git
     home-manager
     libnotify
     neofetch
@@ -128,14 +128,10 @@
     sublime
   ];
 
-  # environment.variables.EDITOR = "sublime";
-
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
     backupFileExtension = "hm-backup";
-    users = {
-      "dane" = import ./home.nix;
-    };
+    users.daneb = import ./home.nix;
   };
 
   # Some programs need SUID wrappers, can be configured further or are

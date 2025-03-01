@@ -13,8 +13,8 @@
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
-  home.username = "dane";
-  home.homeDirectory = "/home/dane";
+  home.username = "daneb";
+  home.homeDirectory = "/home/daneb";
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
@@ -75,8 +75,14 @@
   #
   # or
   #
-  #  /etc/profiles/per-user/dane/etc/profile.d/hm-session-vars.sh
+  #  /etc/profiles/per-user/daneb/etc/profile.d/hm-session-vars.sh
   #
+
+  programs.git = {
+    enable = true;
+    userName = "dane-berg";
+    userEmail = "dayneberg12@gmail.com";
+  };
 
   # a useful reference at https://www.reddit.com/r/NixOS/comments/15zkfj1/simple_homemanager_firefox_setup/
   programs.librewolf = {
@@ -142,7 +148,7 @@
     profiles.default.extensions = with inputs.nix-vscode-extensions.extensions.x86_64-linux.open-vsx; [
       esbenp.prettier-vscode
     ];
-    profiles."dane".userSettings = {
+    profiles."daneb".userSettings = {
       "editor.formatOnSave" = true;
     };
   };

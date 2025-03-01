@@ -33,7 +33,7 @@ alejandra . &>/dev/null \
   || ( alejandra . ; echo "formatting failed!" && exit 1)
 
 alejandra modules/ &>/dev/null \
-  || ( alejandra . ; echo "formatting failed!" && exit 1)
+  || ( alejandra modules/ ; echo "formatting failed!" && exit 1)
 
 # Adds and shows your changes
 git diff -U0 HEAD
@@ -47,8 +47,10 @@ sudo nixos-rebuild switch --flake /etc/nixos#default &>nixos-switch.log || (cat 
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes witih the generation metadata
-# include non-added changes from build
 git commit -am "$current"
+
+# Allow the user to write a custom commit message
+git commit --amend
 
 # Back to where you were
 popd
