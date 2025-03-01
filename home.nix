@@ -78,6 +78,7 @@
   #  /etc/profiles/per-user/dane/etc/profile.d/hm-session-vars.sh
   #
 
+  # a useful reference at https://gitlab.com/usmcamp0811/dotfiles/-/blob/fb584a888680ff909319efdcbf33d863d0c00eaa/modules/home/apps/firefox/default.nix
   programs.librewolf = {
     enable = true;
     settings = {
@@ -88,7 +89,39 @@
       settings = {
         "browser.startup.page" = 3; # Resume the previous browser session
       };
-      # TODO: try other search engines
+      search = {
+        force = true;
+        default = "DuckDuckGo";
+        engines = {
+          "Nix Packages" = {
+            urls = [
+              {
+                template = "https://search.nixos.org/packages";
+                params = [
+                  {
+                    name = "type";
+                    value = "packages";
+                  }
+                  {
+                    name = "query";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "''${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = ["@np"];
+          };
+          "NixOS Wiki" = {
+            urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
+            iconUpdateURL = "https://nixos.wiki/favicon.png";
+            updateInterval = 24 * 60 * 60 * 1000; # every day
+            definedAliases = ["@nw"];
+          };
+          "Bing".metaData.alias = "@b"; # builtin engines only support specifying one additional alias
+          "Wikipedia (en)".metaData.alias = "@w";
+        };
+      };
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         # explore using; nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"
         darkreader
