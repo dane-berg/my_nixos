@@ -32,6 +32,9 @@ fi
 alejandra . &>/dev/null \
   || ( alejandra . ; echo "formatting failed!" && exit 1)
 
+alejandra modules/ &>/dev/null \
+  || ( alejandra . ; echo "formatting failed!" && exit 1)
+
 # Adds and shows your changes
 git add .
 git diff --cached -U0

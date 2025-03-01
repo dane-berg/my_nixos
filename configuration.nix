@@ -2,9 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 {
+  inputs,
   config,
   pkgs,
-  inputs,
   ...
 }: {
   imports = [
@@ -124,18 +124,13 @@
     neofetch
     nodejs
     sublime
-    (vscode-with-extensions.override {
-      vscode = vscodium;
-      vscodeExtensions = with inputs.nix-vscode-extensions.extensions.x86_64-linux.open-vsx; [
-        esbenp.prettier-vscode
-      ];
-    })
   ];
 
   environment.variables.EDITOR = "sublime";
 
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
+    backupFileExtension = "hm-backup";
     users = {
       "dane" = import ./home.nix;
     };

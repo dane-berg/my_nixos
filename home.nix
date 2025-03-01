@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   pkgs,
   ...
@@ -69,6 +70,24 @@
   #
   #  /etc/profiles/per-user/dane/etc/profile.d/hm-session-vars.sh
   #
+
+  programs.librewolf = {
+    enable = true;
+    settings = {
+      "privacy.clearOnShutdown.history" = false;
+    };
+  };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscodium;
+    profiles.default.extensions = with inputs.nix-vscode-extensions.extensions.x86_64-linux.open-vsx; [
+      esbenp.prettier-vscode
+    ];
+    profiles."dane".userSettings = {
+      "editor.formatOnSave" = true;
+    };
+  };
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
