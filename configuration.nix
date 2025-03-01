@@ -48,6 +48,10 @@
     LC_TIME = "en_US.UTF-8";
   };
 
+  # Enable systemwide dark mode with stylix
+  stylix.enable = true;
+  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
@@ -126,7 +130,7 @@
     sublime
   ];
 
-  environment.variables.EDITOR = "sublime";
+  # environment.variables.EDITOR = "sublime";
 
   home-manager = {
     extraSpecialArgs = {inherit inputs;};
