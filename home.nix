@@ -78,7 +78,7 @@
   #  /etc/profiles/per-user/dane/etc/profile.d/hm-session-vars.sh
   #
 
-  # a useful reference at https://gitlab.com/usmcamp0811/dotfiles/-/blob/fb584a888680ff909319efdcbf33d863d0c00eaa/modules/home/apps/firefox/default.nix
+  # a useful reference at https://www.reddit.com/r/NixOS/comments/15zkfj1/simple_homemanager_firefox_setup/
   programs.librewolf = {
     enable = true;
     settings = {
