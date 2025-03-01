@@ -4,6 +4,13 @@
   pkgs,
   ...
 }: {
+  nixpkgs = {
+    overlays = [
+      inputs.nur.overlay
+    ];
+    config.allowUnfree = true;
+  };
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "dane";
@@ -75,6 +82,22 @@
     enable = true;
     settings = {
       "privacy.clearOnShutdown.history" = false;
+    };
+    profiles.default = {
+      isDefault = true;
+      settings = {
+        "browser.startup.page" = 3; # Resume the previous browser session
+      };
+      # TODO: try other search engines
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        onepassword-password-manager
+        ublock-origin
+      ];
+      # attempt to auto-enable extensions
+      extraConfig = ''
+        user_pref("extensions.autoDisableScopes", 0);
+        user_pref("extensions.enabledScopes", 15);
+      '';
     };
   };
 

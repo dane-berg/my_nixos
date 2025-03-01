@@ -22,7 +22,7 @@ else
 fi
 
 # Early return if no changes were detected (thanks @singiamtel!)
-if git diff --quiet && git diff --cached --quiet; then
+if git diff --quiet HEAD; then
     echo "No changes detected, exiting."
     popd
     exit 0
@@ -36,8 +36,7 @@ alejandra modules/ &>/dev/null \
   || ( alejandra . ; echo "formatting failed!" && exit 1)
 
 # Adds and shows your changes
-git add .
-git diff --cached -U0
+git diff --cached -U0 HEAD
 
 echo "NixOS Rebuilding..."
 
@@ -48,7 +47,8 @@ sudo nixos-rebuild switch --flake /etc/nixos#default &>nixos-switch.log || (cat 
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes witih the generation metadata
-git commit -m "$current"
+# include non-added changes from build
+git commit -am "$current"
 
 # Back to where you were
 popd
