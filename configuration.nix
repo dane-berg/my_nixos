@@ -91,6 +91,7 @@
     gch = "git checkout";
     gd = "git diff";
     gdc = "git diff --cached";
+    gdh = "git diff HEAD";
     gl = "git log";
     glp = "git log -p";
     gp = "git push";

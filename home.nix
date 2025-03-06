@@ -78,6 +78,19 @@
   #  /etc/profiles/per-user/daneb/etc/profile.d/hm-session-vars.sh
   #
 
+  # Use `dconf watch /` to track stateful changes you are doing, then set them here.
+  dconf.settings = {
+    "org/gnome/shell" = {
+      favorite-apps = [
+        "librewolf.desktop"
+        "discord.desktop"
+        "obsidian.desktop"
+        "codium.desktop"
+        "org.gnome.Console.desktop"
+      ];
+    };
+  };
+
   programs.git = {
     enable = true;
     userName = "dane-berg";
