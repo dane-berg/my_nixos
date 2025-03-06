@@ -46,7 +46,7 @@ sudo nixos-rebuild switch --flake /etc/nixos#default &>nixos-switch.log || (cat 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
 
-# Commit all changes witih the generation metadata
+# Commit all changes with the generation metadata
 git commit -am "$current"
 
 # Allow the user to write a custom commit message
