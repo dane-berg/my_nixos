@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  system,
   ...
 }: {
   imports = [
@@ -18,7 +19,7 @@
   ];
 
   home-manager = {
-    extraSpecialArgs = {inherit inputs;};
+    extraSpecialArgs = {inherit inputs system;};
     backupFileExtension = "hm-backup";
     users.daneb = import ./home.nix;
   };

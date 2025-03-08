@@ -2,6 +2,7 @@
   inputs,
   config,
   pkgs,
+  system,
   ...
 }: {
   nixpkgs = {
@@ -158,7 +159,7 @@
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    profiles.default.extensions = with inputs.nix-vscode-extensions.extensions.x86_64-linux.open-vsx; [
+    profiles.default.extensions = with inputs.nix-vscode-extensions.extensions."${system}".open-vsx; [
       esbenp.prettier-vscode
     ];
     profiles."daneb".userSettings = {
