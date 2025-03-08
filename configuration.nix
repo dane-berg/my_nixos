@@ -10,7 +10,8 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    inputs.home-manager.nixosModules.home-manager
+    ./modules/core.nix
+    ./modules/development.nix
     ./modules/personal.nix
   ];
 
@@ -20,8 +21,6 @@
 
   networking.hostName = "nixos"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  nix.settings.experimental-features = ["nix-command" "flakes"];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
@@ -47,10 +46,6 @@
     LC_TELEPHONE = "en_US.UTF-8";
     LC_TIME = "en_US.UTF-8";
   };
-
-  # Enable systemwide dark mode with stylix
-  stylix.enable = true;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
@@ -87,23 +82,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
-  environment.shellAliases = {
-    gch = "git checkout";
-    gd = "git diff";
-    gdc = "git diff --cached";
-    gdh = "git diff HEAD";
-    gl = "git log";
-    glp = "git log -p";
-    gp = "git push";
-    gpf = "git push --force-with-lease";
-    gst = "git status";
-    # gsw = "git checkout master-stable && git pull && git checkout";
-    # rbm = "git fetch origin master && git rebase origin/master";
-    nixrb = "/etc/nixos/rebuild-nixos.sh";
-    nixup = "/etc/nixos/update-nixos.sh";
-    subl = "sublime";
-  };
-
   # Define a user account.
   # TODO: Don't forget to set a password with ‘passwd’.
   users.users.daneb = {
@@ -117,25 +95,6 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    alejandra
-    home-manager
-    libnotify
-    libreoffice
-    neofetch
-    nodejs
-    # TODO: setup syntax highlighting using https://gist.github.com/wmertens/9f0f1db0e91bc5e3e430
-    sublime
-  ];
-
-  home-manager = {
-    extraSpecialArgs = {inherit inputs;};
-    backupFileExtension = "hm-backup";
-    users.daneb = import ./home.nix;
-  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
