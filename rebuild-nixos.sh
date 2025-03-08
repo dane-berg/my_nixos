@@ -7,10 +7,7 @@ set -e
 pushd /etc/nixos/
 
 # Check if at least one file is provided as an argument
-if [ $# -eq 0 ]; then
-  # Default to editing main config
-  $EDITOR configuration.nix
-else
+if ! [ $# -eq 0 ]; then
   for file in "$@"; do
   	  if [ -f "$file" ]; then
 	    echo "Editing file: $file"

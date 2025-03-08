@@ -34,7 +34,7 @@
     nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {inherit inputs system;};
       modules = [
-        ./configuration.nix
+        ./erebus/configuration.nix
         inputs.home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
       ];
