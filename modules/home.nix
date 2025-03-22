@@ -60,6 +60,33 @@
     #   org.gradle.console=verbose
     #   org.gradle.daemon.idletimeout=3600000
     # '';
+
+    # https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager is a helpful guide
+    ".config/VSCodium/User/settings.json".text = ''
+            {
+        "chat.editor.fontFamily": "DejaVu Sans Mono",
+        "chat.editor.fontSize": 16.0,
+        "debug.console.fontFamily": "DejaVu Sans Mono",
+        "debug.console.fontSize": 16.0,
+        "editor.fontFamily": "DejaVu Sans Mono",
+        "editor.fontSize": 16.0,
+        "editor.formatOnSave": true,
+        "editor.inlayHints.fontFamily": "DejaVu Sans Mono",
+        "editor.inlineSuggest.fontFamily": "DejaVu Sans Mono",
+        "editor.minimap.sectionHeaderFontSize": 10.285714285714286,
+        "markdown.preview.fontFamily": "DejaVu Sans",
+        "markdown.preview.fontSize": 16.0,
+        "prettier.singleAttributePerLine": true,
+        "scm.inputFontFamily": "DejaVu Sans Mono",
+        "scm.inputFontSize": 14.857142857142858,
+        "screencastMode.fontSize": 64.0,
+        "terminal.integrated.fontSize": 16.0,
+        "workbench.colorTheme": "Stylix",
+        "[typescriptreact]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -163,10 +190,8 @@
     package = pkgs.vscodium;
     profiles.default.extensions = with inputs.nix-vscode-extensions.extensions."${system}".open-vsx; [
       esbenp.prettier-vscode
+      dsznajder.es7-react-js-snippets
     ];
-    profiles."daneb".userSettings = {
-      "editor.formatOnSave" = true;
-    };
   };
 
   # Let Home Manager install and manage itself.
