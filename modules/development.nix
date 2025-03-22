@@ -16,5 +16,6 @@
   environment.systemPackages = with pkgs; [
     nodejs
     python3
+    yarn
   ];
 }

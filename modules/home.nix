@@ -175,6 +175,7 @@
         # explore using; nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"
         darkreader
         onepassword-password-manager
+        react-devtools
         ublock-origin
       ];
       # attempt to auto-enable extensions
@@ -189,6 +190,9 @@
     enable = true;
     package = pkgs.vscodium;
     profiles.default.extensions = with inputs.nix-vscode-extensions.extensions."${system}".open-vsx; [
+      # explore extensions using
+      # nix repl
+      # :lf github:nix-community/nix-vscode-extensions/9edbf5d1c9c9b5c5dd1fa6d6fc0c3cd01ec09346
       esbenp.prettier-vscode
       dsznajder.es7-react-js-snippets
     ];
