@@ -94,8 +94,10 @@
 
   programs.git = {
     enable = true;
-    userName = "dane-berg";
-    userEmail = "dayneberg12@gmail.com";
+    extraConfig = {
+      user.name = "dane-berg";
+      user.email = "dayneberg12@gmail.com";
+    };
   };
 
   # a useful reference at https://www.reddit.com/r/NixOS/comments/15zkfj1/simple_homemanager_firefox_setup/
