@@ -6,7 +6,7 @@ set -e
 pushd /etc/nixos/
 
 # Early return if changes were detected
-if ! [ git diff --quiet HEAD ]; then
+if ! git diff --quiet HEAD; then
     echo "Changes detected, exiting."
     popd
     exit 0
