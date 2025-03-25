@@ -62,31 +62,6 @@
     # '';
 
     # https://www.bekk.christmas/post/2021/16/dotfiles-with-nix-and-home-manager is a helpful guide
-    ".config/VSCodium/User/settings.json".text = ''
-            {
-        "chat.editor.fontFamily": "DejaVu Sans Mono",
-        "chat.editor.fontSize": 16.0,
-        "debug.console.fontFamily": "DejaVu Sans Mono",
-        "debug.console.fontSize": 16.0,
-        "editor.fontFamily": "DejaVu Sans Mono",
-        "editor.fontSize": 16.0,
-        "editor.formatOnSave": true,
-        "editor.inlayHints.fontFamily": "DejaVu Sans Mono",
-        "editor.inlineSuggest.fontFamily": "DejaVu Sans Mono",
-        "editor.minimap.sectionHeaderFontSize": 10.285714285714286,
-        "markdown.preview.fontFamily": "DejaVu Sans",
-        "markdown.preview.fontSize": 16.0,
-        "prettier.singleAttributePerLine": true,
-        "scm.inputFontFamily": "DejaVu Sans Mono",
-        "scm.inputFontSize": 14.857142857142858,
-        "screencastMode.fontSize": 64.0,
-        "terminal.integrated.fontSize": 16.0,
-        "workbench.colorTheme": "Stylix",
-        "[typescriptreact]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode"
-        }
-      }
-    '';
   };
 
   # Home Manager can also manage your environment variables through
@@ -186,9 +161,39 @@
     };
   };
 
+  # a useful reference at https://github.com/thomashoneyman/.dotfiles/blob/69d61ae8650f12f123d375534714c78a3095fb0e/modules/programs/default.nix
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
+    userSettings = {
+      "editor.formatOnSave" = true;
+      "prettier.singleAttributePerLine" = true;
+      "workbench.colorTheme" = "Stylix";
+
+      "[css]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[html]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[javascript]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[json]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[nix]" = {
+        "editor.defaultFormatter" = "kamadorueda.alejandra";
+      };
+      "[typescriptreact]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+      "[typescript]" = {
+        "editor.defaultFormatter" = "esbenp.prettier-vscode";
+      };
+
+      "alejandra.program" = "alejandra";
+    };
     profiles.default.extensions = with inputs.nix-vscode-extensions.extensions."${system}".open-vsx; [
       # explore extensions using
       # nix repl
