@@ -10,4 +10,9 @@
     dedicatedServer.openFirewall = true;
     localNetworkGameTransfers.openFirewall = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    wineWowPackages.stable
+    lutris
+  ];
 }
