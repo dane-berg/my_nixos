@@ -16,6 +16,7 @@
   environment.systemPackages = with pkgs; [
     nodejs
     python3
+    sqlite
     yarn
   ];
 }
