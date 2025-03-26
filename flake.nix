@@ -20,6 +20,10 @@
       url = "github:nix-community/nix-vscode-extensions";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-snapd = {
+      url = "github:io12/nix-snapd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs: let
@@ -37,6 +41,7 @@
         ./erebus/configuration.nix
         inputs.home-manager.nixosModules.default
         inputs.stylix.nixosModules.stylix
+        inputs.nix-snapd.nixosModules.default
       ];
     };
   };

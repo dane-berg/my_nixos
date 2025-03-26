@@ -19,4 +19,6 @@
     sqlite
     yarn
   ];
+
+  services.snap.enable = true;
 }
