@@ -107,6 +107,7 @@
     enable = true;
     settings = {
       "privacy.clearOnShutdown.history" = false;
+      "webgl.disabled" = false;
     };
     profiles.default = {
       isDefault = true;
