@@ -169,6 +169,7 @@
       "editor.formatOnSave" = true;
       "prettier.singleAttributePerLine" = true;
       "workbench.colorTheme" = "Stylix";
+      "explorer.confirmDragAndDrop" = false;
 
       "[css]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
