@@ -14,6 +14,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    curl
     nest-cli
     nodejs
     python3
