@@ -14,6 +14,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    nest-cli
     nodejs
     python3
     sqlite
