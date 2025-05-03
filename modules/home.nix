@@ -171,6 +171,7 @@
       "prettier.singleAttributePerLine" = true;
       "workbench.colorTheme" = "Stylix";
       "explorer.confirmDragAndDrop" = false;
+      "typescript.updateImportsOnFileMove.enabled" = "always";
 
       "[css]" = {
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
