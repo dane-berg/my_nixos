@@ -140,7 +140,7 @@
           "NixOS Wiki" = {
             urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
             iconUpdateURL = "https://nixos.wiki/favicon.png";
-            updateInterval = 24 * 60 * 60 * 1000; # every day
+            updateInterval = 2 * 24 * 60 * 60 * 1000; # every 2 days
             definedAliases = ["@nw"];
           };
           "Bing".metaData.alias = "@b"; # builtin engines only support specifying one additional alias
