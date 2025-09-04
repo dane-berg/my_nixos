@@ -10,17 +10,17 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../modules/core.nix
-    ../modules/development.nix
-    ../modules/gaming.nix
-    ../modules/personal.nix
+    ../../modules/core.nix
+    ../../modules/development.nix
+    ../../modules/gaming.nix
+    ../../modules/personal.nix
   ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "erebus"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -82,17 +82,6 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
-
-  # Define a user account.
-  # TODO: Don't forget to set a password with ‘passwd’.
-  users.users.daneb = {
-    isNormalUser = true;
-    description = "Dane Bergman";
-    extraGroups = ["networkmanager" "wheel"];
-    packages = with pkgs; [
-      #  thunderbird
-    ];
-  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;

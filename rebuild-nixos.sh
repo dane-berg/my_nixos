@@ -8,6 +8,7 @@ pushd /etc/nixos/
 
 # Check if at least one file is provided as an argument
 if ! [ $# -eq 0 ]; then
+  # open each file in the default editor
   for file in "$@"; do
   	  if [ -f "$file" ]; then
 	    echo "Editing file: $file"
@@ -33,12 +34,14 @@ alejandra modules/ &>/dev/null \
   || ( alejandra modules/ ; echo "formatting failed!" && exit 1)
 
 # Adds and shows your changes
+git add .
 git diff -U0 HEAD
 
 echo "NixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-sudo nixos-rebuild switch --flake /etc/nixos#default &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
+host_name=${hostname}
+sudo nixos-rebuild switch --flake /etc/nixos#$host_name &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)

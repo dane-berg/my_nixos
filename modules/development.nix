@@ -1,5 +1,6 @@
 {pkgs, ...}: {
   environment.shellAliases = {
+    add = "git add .";
     gch = "git checkout";
     gd = "git diff";
     gdc = "git diff --cached";

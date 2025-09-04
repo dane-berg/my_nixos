@@ -26,23 +26,35 @@
     };
   };
 
-  outputs = inputs: let
-    system = "x86_64-linux";
-    pkgs = import inputs.nixpkgs {
-      inherit system;
-      config = {
-        allowUnfree = true;
-      };
-    };
-  in {
-    nixosConfigurations.default = inputs.nixpkgs.lib.nixosSystem {
-      specialArgs = {inherit inputs system;};
-      modules = [
-        ./erebus/configuration.nix
-        inputs.home-manager.nixosModules.default
-        inputs.stylix.nixosModules.stylix
-        inputs.nix-snapd.nixosModules.default
-      ];
+  outputs = inputs @ {
+    self,
+    nixpkgs,
+    home-manager,
+    ...
+  }: {
+    nixosConfigurations = {
+      erebus = let
+        username = "daneb";
+        specialArgs = {inherit username inputs;};
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/erebus/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              # TODO: move overlays out of home-manager and turn on these settings
+              # home-manager.useGlobalPkgs = true;
+              # home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs // {system = "x86_64-linux";};
+              home-manager.users.${username} = import ./users/${username}/home.nix;
+              home-manager.backupFileExtension = "hm-backup";
+            }
+            inputs.stylix.nixosModules.stylix
+            inputs.nix-snapd.nixosModules.default
+          ];
+        };
     };
   };
 }
