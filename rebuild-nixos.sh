@@ -3,6 +3,35 @@
 # A rebuild script that commits on a successful build
 set -e
 
+host_name=${hostname}
+
+# Parse optional arguments
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --flake)
+      shift
+      if [[ -n "$1" ]]; then
+        host_name="$1"
+        shift
+      else
+        echo "Error: --flake requires a value."
+        exit 1
+      fi
+      ;;
+    --) # end of options
+      shift
+      break
+      ;;
+    -*) # unknown option
+      echo "Unknown option: $1"
+      exit 1
+      ;;
+    *) # positional argument (file)
+      break
+      ;;
+  esac
+done
+
 # cd to your config dir
 pushd /etc/nixos/
 
@@ -40,7 +69,6 @@ git diff -U0 HEAD
 echo "NixOS Rebuilding..."
 
 # Rebuild, output simplified errors, log trackebacks
-host_name=${hostname}
 sudo nixos-rebuild switch --flake /etc/nixos#$host_name &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
 
 # Get current generation metadata

@@ -55,6 +55,29 @@
             inputs.nix-snapd.nixosModules.default
           ];
         };
+
+      castor = let
+        username = "daneb";
+        specialArgs = {inherit username inputs;};
+      in
+        nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          system = "x86_64-linux";
+          modules = [
+            ./hosts/castor/configuration.nix
+            home-manager.nixosModules.home-manager
+            {
+              # TODO: move overlays out of home-manager and turn on these settings
+              # home-manager.useGlobalPkgs = true;
+              # home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = specialArgs // {system = "x86_64-linux";};
+              home-manager.users.${username} = import ./users/${username}/home.nix;
+              home-manager.backupFileExtension = "hm-backup";
+            }
+            inputs.stylix.nixosModules.stylix
+            inputs.nix-snapd.nixosModules.default
+          ];
+        };
     };
   };
 }
