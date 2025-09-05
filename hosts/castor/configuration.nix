@@ -10,6 +10,9 @@
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ../../modules/core.nix
+    ../../modules/development.nix
+    ../../modules/gaming.nix
+    ../../modules/personal.nix
   ];
 
   # Bootloader.

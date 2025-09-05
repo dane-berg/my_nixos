@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Forked from https://gist.github.com/0atman/1a5133b842f929ba4c1e195ee67599d5
 # A rebuild script that commits on a successful build
-set -e
+set -eo pipefail
 
-host_name=${hostname}
+log_file=nixos-switch.log
+host_name=$(hostname)
 
 # Parse optional arguments
 while [[ $# -gt 0 ]]; do
@@ -31,6 +32,12 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+# assert host_name is nonempty
+if ! [ -n "$host_name" ]; then
+  echo "Empty hostname"
+  exit 1
+fi
 
 # cd to your config dir
 pushd /etc/nixos/
@@ -68,14 +75,30 @@ git diff -U0 HEAD
 
 echo "NixOS Rebuilding..."
 
-# Rebuild, output simplified errors, log trackebacks
-sudo nixos-rebuild switch --flake /etc/nixos#$host_name &>nixos-switch.log || (cat nixos-switch.log | grep --color error && exit 1)
+spinner()
+{
+  local pid=$!
+  local delay=0.75
+  local spinstr='|/-\'
+  while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+    local temp=${spinstr#?}
+    printf " [%c]  " "$spinstr"
+    local spinstr=$temp${spinstr%"$temp"}
+    sleep $delay
+    printf "\b\b\b\b\b\b"
+  done
+  printf "    \b\b\b\b"
+}
+
+# Rebuild, output simplified errors, log tracebacks while displaying a spinner
+sudo nixos-rebuild switch --flake /etc/nixos#$host_name &> "$log_file" || (cat nixos-switch.log | grep --color -i error && exit 1) &
+spinner
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes with the generation metadata
-git commit -am "$current"
+git commit -am "$host_name $current"
 
 # Allow the user to write a custom commit message
 git commit --amend
