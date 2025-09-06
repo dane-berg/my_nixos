@@ -90,9 +90,23 @@ spinner()
   printf "    \b\b\b\b"
 }
 
-# Rebuild, output simplified errors, log tracebacks while displaying a spinner
-sudo nixos-rebuild switch --flake /etc/nixos#$host_name &> "$log_file" || (cat nixos-switch.log | grep --color -i error && exit 1) &
+# Rebuild & log traceback while displaying a spinner
+sudo nixos-rebuild switch --flake /etc/nixos#$host_name &> "$log_file" &
 spinner
+
+# Output simplified errors
+export GREP_COLORS='ms=01;31' # display errors in red
+error_message=$(cat "$log_file" | grep --color='always' -i error || (( $? == 1)))
+if [ -n "$error_message" ]; then
+  echo "nixos-rebuild switch --flake /etc/nixos#$host_name failed with message:"
+  echo "$error_message"
+  exit 1
+fi
+
+# Output warnings if there are no errors
+export GREP_COLORS='ms=01;34' # display warnings in blue
+warning_message=$(cat "$log_file" | grep --color='always' -i "evaluation warning" || (( $? == 1)))
+echo "$warning_message"
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)

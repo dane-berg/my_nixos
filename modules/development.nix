@@ -5,7 +5,7 @@
     gd = "git diff";
     gdc = "git diff --cached";
     gdh = "git diff HEAD";
-    gl = "git log";
+    glo = "git log --oneline";
     glp = "git log -p";
     gp = "git push";
     gpf = "git push --force-with-lease";
