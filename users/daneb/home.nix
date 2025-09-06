@@ -103,6 +103,7 @@
   programs.git = {
     enable = true;
     extraConfig = {
+      pull.rebase = true;
       user.name = "dane-berg";
       user.email = "dayneberg12@gmail.com";
     };
