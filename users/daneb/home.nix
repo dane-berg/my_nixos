@@ -244,12 +244,25 @@ in
       ];
       # keybinds
       bind = [
-        # kitty terminal emulator
-        "SUPER, Q, exec, kitty"
         # rofi launcher
         "SUPER, S, exec, rofi -show drun -show-icons"
         # move currnet window to the next monitor
         "SUPER, X, movewindow, mon:+1"
+        # TODO: set kitty as $terminal
+        "SUPER, Q, exec, kitty"
+        "SUPER, C, killactive"
+        "SUPER, M, exit"
+        "SUPER, E, exec, $fileManager"
+        "SUPER, V, togglefloating"
+        "SUPER, R, exec, $menu"
+        "SUPER, P, pseudo," # dwindle
+        "SUPER, J, togglesplit," # dwindle
+        "SUPER, left, movefocus, 1"
+        "SUPER, right, movefocus, r"
+        "SUPER, up, movefocus, u"
+        "SUPER, down, movefocus, d"
+        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
       # startup script
       exec-once = ''${startupScript}/bin/start'';

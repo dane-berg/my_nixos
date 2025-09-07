@@ -15,7 +15,9 @@
   programs.firefox.enable = false;
 
   environment.systemPackages = with pkgs; [
+    google-chrome
     discord
+    vesktop # modified discord with actually-functional screen sharing
     gimp-with-plugins
     libreoffice
     obsidian
