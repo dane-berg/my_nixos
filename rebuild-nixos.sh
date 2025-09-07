@@ -96,7 +96,7 @@ spinner
 
 # Output simplified errors
 export GREP_COLORS='ms=01;31' # display errors in red
-error_message=$(cat "$log_file" | grep --color='always' -i error || (( $? == 1)))
+error_message=$(cat "$log_file" | grep -A 4 --color='always' -i "error:" || (( $? == 1)))
 if [ -n "$error_message" ]; then
   echo "nixos-rebuild switch --flake /etc/nixos#$host_name failed with message:"
   echo "$error_message"
@@ -107,12 +107,14 @@ fi
 export GREP_COLORS='ms=01;34' # display warnings in blue
 warning_message=$(cat "$log_file" | grep --color='always' -i "evaluation warning" || (( $? == 1)))
 echo "$warning_message"
+tail -n 1 "$log_file"
+echo "" # newline
 
 # Get current generation metadata
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes with the generation metadata
-git commit -am "$host_name $current"
+git commit -aqm "$host_name $current"
 
 # Allow the user to write a custom commit message
 git commit --amend
