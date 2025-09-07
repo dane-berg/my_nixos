@@ -35,11 +35,11 @@
     nixosConfigurations = {
       erebus = let
         username = "daneb";
-        specialArgs = {inherit username inputs;};
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs username system;};
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          system = "x86_64-linux";
           modules = [
             ./hosts/erebus/configuration.nix
             home-manager.nixosModules.home-manager
@@ -47,7 +47,7 @@
               # TODO: move overlays out of home-manager and turn on these settings
               # home-manager.useGlobalPkgs = true;
               # home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = specialArgs // {system = "x86_64-linux";};
+              home-manager.extraSpecialArgs = specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
               home-manager.backupFileExtension = "hm-backup";
             }
@@ -58,11 +58,11 @@
 
       castor = let
         username = "daneb";
-        specialArgs = {inherit username inputs;};
+        system = "x86_64-linux";
+        specialArgs = {inherit inputs username system;};
       in
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
-          system = "x86_64-linux";
           modules = [
             ./hosts/castor/configuration.nix
             home-manager.nixosModules.home-manager
@@ -70,7 +70,7 @@
               # TODO: move overlays out of home-manager and turn on these settings
               # home-manager.useGlobalPkgs = true;
               # home-manager.useUserPackages = true;
-              home-manager.extraSpecialArgs = specialArgs // {system = "x86_64-linux";};
+              home-manager.extraSpecialArgs = specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
               home-manager.backupFileExtension = "hm-backup";
             }
