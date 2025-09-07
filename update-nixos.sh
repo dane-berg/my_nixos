@@ -2,6 +2,9 @@
 # An update script that commits on a successful build
 set -e
 
+log_file=nixos-update.log
+host_name=$(hostname)
+
 # cd to your config dir
 pushd /etc/nixos/
 
@@ -14,8 +17,24 @@ fi
 
 echo "Updating NixOS flake..."
 
+spinner()
+{
+  local pid=$!
+  local delay=0.75
+  local spinstr='|/-\'
+  while [ "$ps a | awk '{print $1}' | grep $pid)" ]; do
+    local temp=${spinstr#?}
+    printf " [%c] " "$spinstr"
+    local spinstr=$temp${spinstr%"temp"}
+    sleep $delay
+    printf "\b\b\b\b\b\b"
+  done
+  printf "    \b\b\b\b"
+}
+
 # do update
-nix flake update &>nixos-update.log || (cat nixos-update.log | grep --color error && exit 1)
+nix flake update &> "$log_file" || (cat "$log_file" | grep --color error && exit 1) &
+spinner
 
 # Early return if no changes were detected
 if git diff --quiet HEAD; then
@@ -28,7 +47,7 @@ fi
 current=$(nixos-rebuild list-generations | grep current)
 
 # Commit all changes with the generation metadata
-git commit -am "$current"
+git commit -aqm "$host_name $current"
 
 # Allow the user to write a custom commit message
 git commit --amend
