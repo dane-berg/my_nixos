@@ -4,7 +4,21 @@
   pkgs,
   system,
   ...
-}: {
+}: 
+let
+  startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
+    # wallpaper
+    # swww init &
+    # swww img <filepath> &
+    
+    nm-applet --indicator &
+
+    waybar &
+    
+    dunst
+  '';
+in
+{
   nixpkgs = {
     overlays = [
       inputs.nur.overlay
@@ -82,6 +96,7 @@
   #
 
   # Use `dconf watch /` to track stateful changes you are doing, then set them here.
+  # I only enable dconf on gnome
   dconf = {
     enable = true;
     settings = {
@@ -211,6 +226,34 @@
       esbenp.prettier-vscode
       dsznajder.es7-react-js-snippets
     ];
+  };
+
+  wayland.windowManager.hyprland = {
+    enable = true;
+    plugins = [
+      # example plugin definition
+      # inputs.hyprland-plugins.packages."${system}".borders-plus-plus
+    ];
+    settings = {
+      # monitors
+      # TODO: make this host-specific before moving erebus to hyprland
+      monitor = [
+        ",preferred,auto,auto"
+        "DP-3, 2560x1440, 0x0, 1"
+        "DP-2, 2560x1440, 2560x0, 1"
+      ];
+      # keybinds
+      bind = [
+        # kitty terminal emulator
+        "SUPER, Q, exec, kitty"
+        # rofi launcher
+        "SUPER, S, exec, rofi -show drun -show-icons"
+        # move currnet window to the next monitor
+        "SUPER, X, movewindow, mon:+1"
+      ];
+      # startup script
+      exec-once = ''${startupScript}/bin/start'';
+    };
   };
 
   # Let Home Manager install and manage itself.

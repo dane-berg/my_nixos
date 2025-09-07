@@ -44,7 +44,7 @@ if git diff --quiet HEAD; then
 fi
 
 # Get current generation metadata
-current=$(nixos-rebuild list-generations | grep current)
+current=$(nixos-rebuild list-generations | grep True || (( $? == 1 )))
 
 # Commit all changes with the generation metadata
 git commit -aqm "$host_name $current"

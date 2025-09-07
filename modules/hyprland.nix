@@ -1,11 +1,13 @@
 {
+  inputs,
   pkgs,
-  username,
+  system,
   ...
 }: {
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
+    package = inputs.hyprland.packages."${system}".hyprland;
   };
 
   environment = {
@@ -32,7 +34,7 @@
   };
 
   hardware = {
-    opengl.enable = true;
+    graphics.enable = true;
     # Most wayland compositors need this
     nvidia.modesetting.enable = true;
   };

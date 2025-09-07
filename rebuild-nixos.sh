@@ -63,11 +63,19 @@ if git diff --quiet HEAD; then
 fi
 
 # Autoformat your nix files
-alejandra . &>/dev/null \
-  || ( alejandra . ; echo "formatting failed!" && exit 1)
+format_nix() {
+  alejandra "$1" &>/dev/null \
+  || ( alejandra "$1" ; echo "formatting failed!" && exit 1)
+}
 
-alejandra modules/ &>/dev/null \
-  || ( alejandra modules/ ; echo "formatting failed!" && exit 1)
+#find . -name "*.nix" -exec format_nix "{}" \;
+
+# Make sure globstar is enabled for recursive search behavior
+shopt -s globstar
+for i in *.nix; do
+  echo "formatting $i ..."
+  format_nix "$i"
+done
 
 # Adds and shows your changes
 git add .
@@ -96,7 +104,7 @@ spinner
 
 # Output simplified errors
 export GREP_COLORS='ms=01;31' # display errors in red
-error_message=$(cat "$log_file" | grep -A 4 --color='always' -i "error:" || (( $? == 1)))
+error_message=$(cat "$log_file" | grep -A 4 --color='always' -i "error:" || (( $? == 1 )))
 if [ -n "$error_message" ]; then
   echo "nixos-rebuild switch --flake /etc/nixos#$host_name failed with message:"
   echo "$error_message"
@@ -105,13 +113,13 @@ fi
 
 # Output warnings if there are no errors
 export GREP_COLORS='ms=01;34' # display warnings in blue
-warning_message=$(cat "$log_file" | grep --color='always' -i "evaluation warning" || (( $? == 1)))
+warning_message=$(cat "$log_file" | grep --color='always' -i "evaluation warning" || (( $? == 1 )))
 echo "$warning_message"
 tail -n 1 "$log_file"
 echo "" # newline
 
 # Get current generation metadata
-current=$(nixos-rebuild list-generations | grep current)
+current=$(nixos-rebuild list-generations | grep True | cut -c 1-93 || (( $? == 1 )))
 
 # Commit all changes with the generation metadata
 git commit -aqm "$host_name $current"
