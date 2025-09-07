@@ -34,16 +34,20 @@ mv ~/erebus hosts/
 
 nano flake.nix # create a new host; update the username, system, and path to configuration.nix.
 
-nano hosts/erebus/configuration.nix # import the core module, set the host name, and delete things already managed by modules
+nano hosts/erebus/configuration.nix # import the core module & a desktop manager module, set the host name, and delete things already managed by modules
 ```
 ```diff
   imports = [
     ./hardware-configuration.nix
 +   ../../modules/core.nix
++   ../../modules/gnome.nix
   ];
 
 - networking.hostName = "nixos";
 + networking.hostName = "erebus";
+
+- services.xserver.displayManager.gdm.enable = true;
+- services.xserver.desktopManager.gnome.enable = true;
 
 - users.users.daneb = {
 -   isNormalUser = true;
