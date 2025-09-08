@@ -21,6 +21,7 @@
     home-manager
     libnotify
     neofetch
+    shfmt
   ];
 
   programs._1password.enable = true;
