@@ -244,10 +244,10 @@ in
       ];
       # keybinds
       bind = [
-        # rofi launcher
-        "SUPER, S, exec, rofi -show drun -show-icons"
+        # see https://wiki.hypr.land/Configuring/Binds/
         # move currnet window to the next monitor
         "SUPER, X, movewindow, mon:+1"
+        "SUPER, S, exec, rofi -show drun -show-icons"
         # TODO: set kitty as $terminal
         "SUPER, Q, exec, kitty"
         "SUPER, C, killactive"
@@ -257,15 +257,28 @@ in
         "SUPER, R, exec, $menu"
         "SUPER, P, pseudo," # dwindle
         "SUPER, J, togglesplit," # dwindle
-        "SUPER, left, movefocus, 1"
+        "SUPER, left, movefocus, l"
         "SUPER, right, movefocus, r"
         "SUPER, up, movefocus, u"
         "SUPER, down, movefocus, d"
-        ",XF86AudioRaiseVolume, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
-        ",XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
+        "SUPER, grave, exec, flameshot gui"
+        "SUPER, equal, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
+        "SUPER, minus, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
       # startup script
       exec-once = ''${startupScript}/bin/start'';
+    };
+  };
+
+  services.flameshot = {
+    enable = true;
+    package = pkgs.flameshot.override {
+      enableWlrSupport = true;
+    };
+    settings = {
+      General = {
+        useGrimAdapter = true;
+      };
     };
   };
 

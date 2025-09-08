@@ -18,18 +18,19 @@
       NIXOS_OZONE_WL = "1";
     };
 
-    systemPackages = [
+    systemPackages = with pkgs; [
       (
-        pkgs.waybar.overrideAttrs (oldAttrs: {
+        waybar.overrideAttrs (oldAttrs: {
           mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
         })
       )
-      pkgs.dunst
-      pkgs.swww
-      pkgs.kitty
-      pkgs.rofi-wayland
-      pkgs.networkmanagerapplet
-      pkgs.kdePackages.dolphin
+      dunst
+      swww
+      kitty
+      rofi-wayland
+      networkmanagerapplet
+      kdePackages.dolphin
+      grim
     ];
   };
 
