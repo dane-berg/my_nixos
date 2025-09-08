@@ -65,6 +65,16 @@ spinner() {
   printf "    \b\b\b\b"
 }
 
+# Autoformat your nix files
+format() {
+  for file in $(find . -name "*.nix"); do
+    if [ -f "$file" ]; then
+      echo "formatting $file ..."
+      alejandra "$file" &>/dev/null || (alejandra "$file" && echo "Formatting failed!" && popd && exit 1)
+    fi
+  done
+}
+
 rebuild() {
 # Check if at least one file is provided as an argument
 if ! [ $# -eq 0 ]; then
@@ -81,20 +91,7 @@ fi
 
 assert_changes
 
-# Autoformat your nix files
-format_nix() {
-  alejandra "$1" &>/dev/null \
-  || ( alejandra "$1" ; echo "formatting failed!" && exit 1)
-}
-
-#find . -name "*.nix" -exec format_nix "{}" \;
-
-# Make sure globstar is enabled for recursive search behavior
-shopt -s globstar
-for i in *.nix; do
-  echo "formatting $i ..."
-  format_nix "$i"
-done
+format
 
 # Adds and shows your changes
 git add .
@@ -165,8 +162,10 @@ notify-send -e "NixOS Updated OK!" --icon=software-update-available
 }
 # ------------ END OF FUNCTION DEFINITIONS ------------
 
-# Either rebuild or update
-if [[ "$1" = "rebuild" ]]; then
+if [[ "$1" = "format" ]]; then
+  shift
+  format "$@"
+elif [[ "$1" = "rebuild" ]]; then
   shift
   log_file=nixos-switch.log
   rebuild "$@"
@@ -177,6 +176,7 @@ elif [[ "$1" = "update" ]]; then
 else
   echo "usage: [--flake <flake>] <command>"
   echo "Commands include:"
+  echo "  format   Formats all *.nix files in /etc/nixos, recursively"
   echo "  rebuild  Opens provided files in $editor, rebuilds, and commits the result"
   echo "  update   Updates nix packages and commits the result"
 fi

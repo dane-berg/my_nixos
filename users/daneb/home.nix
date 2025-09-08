@@ -4,21 +4,19 @@
   pkgs,
   system,
   ...
-}: 
-let
+}: let
   startupScript = pkgs.pkgs.writeShellScriptBin "start" ''
     # wallpaper
     # swww init &
     # swww img <filepath> &
-    
+
     nm-applet --indicator &
 
     waybar &
-    
+
     dunst
   '';
-in
-{
+in {
   nixpkgs = {
     overlays = [
       inputs.nur.overlay
