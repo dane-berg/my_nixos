@@ -3,7 +3,6 @@
 # A rebuild script that commits on a successful build
 set -eo pipefail
 
-log_file=nixos-switch.log
 host_name=$(hostname)
 
 # Parse optional arguments
@@ -42,6 +41,31 @@ fi
 # cd to your config dir
 pushd /etc/nixos/
 
+# ------------ START OF FUNCTION DEFINITIONS ------------
+assert_changes() {
+# Early return if no changes were detected (thanks @singiamtel!)
+if git diff --quiet HEAD; then
+    echo "No changes detected, exiting."
+    popd
+    exit 0
+fi
+}
+
+spinner() {
+  local pid=$!
+  local delay=0.75
+  local spinstr='|/-\'
+  while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
+    local temp=${spinstr#?}
+    printf " [%c]  " "$spinstr"
+    local spinstr=$temp${spinstr%"$temp"}
+    sleep $delay
+    printf "\b\b\b\b\b\b"
+  done
+  printf "    \b\b\b\b"
+}
+
+rebuild() {
 # Check if at least one file is provided as an argument
 if ! [ $# -eq 0 ]; then
   # open each file in the default editor
@@ -55,12 +79,7 @@ if ! [ $# -eq 0 ]; then
   done
 fi
 
-# Early return if no changes were detected (thanks @singiamtel!)
-if git diff --quiet HEAD; then
-    echo "No changes detected, exiting."
-    popd
-    exit 0
-fi
+assert_changes
 
 # Autoformat your nix files
 format_nix() {
@@ -82,21 +101,6 @@ git add .
 git diff -U0 HEAD
 
 echo "NixOS Rebuilding..."
-
-spinner()
-{
-  local pid=$!
-  local delay=0.75
-  local spinstr='|/-\'
-  while [ "$(ps a | awk '{print $1}' | grep $pid)" ]; do
-    local temp=${spinstr#?}
-    printf " [%c]  " "$spinstr"
-    local spinstr=$temp${spinstr%"$temp"}
-    sleep $delay
-    printf "\b\b\b\b\b\b"
-  done
-  printf "    \b\b\b\b"
-}
 
 # Rebuild & log traceback while displaying a spinner
 sudo nixos-rebuild switch --flake /etc/nixos#$host_name &> "$log_file" &
@@ -127,8 +131,55 @@ git commit -aqm "$host_name $current"
 # Allow the user to write a custom commit message
 git commit --amend
 
-# Back to where you were
-popd
-
 # Notify all OK!
 notify-send -e "NixOS Rebuilt OK!" --icon=software-update-available
+}
+
+update() {
+# Early return if changes were detected
+if ! git diff --quiet HEAD; then
+    echo "Changes detected, exiting."
+    popd
+    exit 0
+fi
+
+echo "Updating NixOS flake..."
+
+# do update
+nix flake update &> "$log_file" || (cat "$log_file" | grep --color error && exit 1) &
+spinner
+
+assert_changes
+
+# Get current generation metadata
+current=$(nixos-rebuild list-generations | grep True || (( $? == 1 )))
+
+# Commit all changes with the generation metadata
+git commit -aqm "$host_name $current"
+
+# Allow the user to write a custom commit message
+git commit --amend
+
+# Notify all OK!
+notify-send -e "NixOS Updated OK!" --icon=software-update-available
+}
+# ------------ END OF FUNCTION DEFINITIONS ------------
+
+# Either rebuild or update
+if [[ "$1" = "rebuild" ]]; then
+  shift
+  log_file=nixos-switch.log
+  rebuild "$@"
+elif [[ "$1" = "update" ]]; then
+  shift
+  log_file=nixos-update.log
+  update "$@"
+else
+  echo "usage: [--flake <flake>] <command>"
+  echo "Commands include:"
+  echo "  rebuild  Opens provided files in $editor, rebuilds, and commits the result"
+  echo "  update   Updates nix packages and commits the result"
+fi
+
+# Back to where you were
+popd

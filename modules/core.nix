@@ -9,8 +9,8 @@
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
   environment.shellAliases = {
-    nixrb = "/etc/nixos/rebuild-nixos.sh";
-    nixup = "/etc/nixos/update-nixos.sh";
+    nixrb = "/etc/nixos/nixutil.sh rebuild";
+    nixup = "/etc/nixos/nixutil.sh update";
   };
 
   # List packages installed in system profile. To search, run:

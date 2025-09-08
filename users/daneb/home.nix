@@ -245,23 +245,27 @@ in
       # keybinds
       bind = [
         # see https://wiki.hypr.land/Configuring/Binds/
-        # move currnet window to the next monitor
-        "SUPER, X, movewindow, mon:+1"
+        # applications
         "SUPER, S, exec, rofi -show drun -show-icons"
-        # TODO: set kitty as $terminal
-        "SUPER, Q, exec, kitty"
-        "SUPER, C, killactive"
-        "SUPER, M, exit"
+        "SUPER, Q, exec, kitty" # TODO: set kitty as $terminal
         "SUPER, E, exec, $fileManager"
-        "SUPER, V, togglefloating"
         "SUPER, R, exec, $menu"
-        "SUPER, P, pseudo," # dwindle
-        "SUPER, J, togglesplit," # dwindle
+        # windows
         "SUPER, left, movefocus, l"
         "SUPER, right, movefocus, r"
         "SUPER, up, movefocus, u"
         "SUPER, down, movefocus, d"
+        "SUPER, C, killactive"
+        "SUPER, M, exit"
+        "SUPER, V, togglefloating"
+        "SUPER, X, movewindow, mon:+1" # move current window to the next monitor
+        # dwindle
+        "SUPER, P, pseudo,"
+        "SUPER, J, togglesplit, "
+        "SUPER, Z, swapsplit, "
+        # screenshot
         "SUPER, grave, exec, flameshot gui"
+        # audio
         "SUPER, equal, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
         "SUPER, minus, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
