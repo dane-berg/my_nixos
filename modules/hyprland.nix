@@ -53,4 +53,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
+
+  services.udisks2.enable = true;
 }

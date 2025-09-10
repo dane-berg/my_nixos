@@ -246,7 +246,7 @@ in {
         # applications
         "SUPER, S, exec, rofi -show drun -show-icons"
         "SUPER, Q, exec, kitty" # TODO: set kitty as $terminal
-        "SUPER, E, exec, $fileManager"
+        "SUPER, E, exec, dolphin"
         "SUPER, R, exec, $menu"
         # windows
         "SUPER, left, movefocus, l"
