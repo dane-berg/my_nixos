@@ -243,6 +243,7 @@ in {
       # keybinds
       bind = [
         # see https://wiki.hypr.land/Configuring/Binds/
+        # use wev to discover the name of various keys
         # applications
         "SUPER, S, exec, rofi -show drun -show-icons"
         "SUPER, Q, exec, kitty" # TODO: set kitty as $terminal
@@ -261,26 +262,16 @@ in {
         "SUPER, P, pseudo,"
         "SUPER, J, togglesplit, "
         "SUPER, Z, swapsplit, "
-        # screenshot
-        "SUPER, grave, exec, flameshot gui"
+        # screen capture
+        "SUPER, grave, exec, hyprshot -m output -m active -o ~/Pictures" # captures the current monitor
+        "SUPER, 1, exec, hyprshot -m window -m active -o ~/Pictures" # captures the current window
+        "SUPER, 2, exec, hyprshot -m region -o ~/Pictures" # captures a region you select
         # audio
         "SUPER, equal, exec, wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"
         "SUPER, minus, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
       ];
       # startup script
       exec-once = ''${startupScript}/bin/start'';
-    };
-  };
-
-  services.flameshot = {
-    enable = true;
-    package = pkgs.flameshot.override {
-      enableWlrSupport = true;
-    };
-    settings = {
-      General = {
-        useGrimAdapter = true;
-      };
     };
   };
 

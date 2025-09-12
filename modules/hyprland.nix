@@ -18,6 +18,11 @@
       NIXOS_OZONE_WL = "1";
     };
 
+    shellAliases = {
+      activeMonitor = "hyprctl activeworkspace | head -n1 | cut -d' ' -f7 | tr -d ':'";
+      activeMonitorId = "hyprctl activeworkspace | grep 'monitorID' | cut -d' ' -f2";
+    };
+
     systemPackages = with pkgs; [
       (
         waybar.overrideAttrs (oldAttrs: {
@@ -31,6 +36,7 @@
       networkmanagerapplet
       kdePackages.dolphin
       grim
+      hyprshot
     ];
   };
 
