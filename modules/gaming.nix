@@ -2,14 +2,31 @@
   inputs,
   pkgs,
   system,
+  config,
   ...
 }: {
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  hardware.nvidia = {
+    open = true;
+    modesetting.enable = true;
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+  };
+
+  services.xserver.videoDrivers = ["nvidia"];
+
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall = true;
     dedicatedServer.openFirewall = true;
+    gamescopeSession.enable = true;
     localNetworkGameTransfers.openFirewall = true;
+    remotePlay.openFirewall = true;
   };
+
+  programs.gamemode.enable = true;
 
   environment.systemPackages = with pkgs; [
     wineWowPackages.stable
