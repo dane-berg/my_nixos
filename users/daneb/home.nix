@@ -126,6 +126,7 @@ in {
       isDefault = true;
       settings = {
         "browser.startup.page" = 3; # Resume the previous browser session
+        "extensions.activeThemeID" = "firefox-compact-dark@mozilla.org";
       };
       search = {
         force = true;
