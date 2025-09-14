@@ -227,6 +227,7 @@ in {
       # inputs.hyprland-plugins.packages."${system}".borders-plus-plus
     ];
     settings = {
+      general.layout = "dwindle";
       # monitors
       # TODO: make this host-specific before moving erebus to hyprland
       monitor = [
@@ -266,6 +267,9 @@ in {
       ];
       # startup script
       exec-once = ''${startupScript}/bin/start'';
+      dwindle = {
+        preserve_split = true; # enables togglesplit
+      };
     };
   };
 
