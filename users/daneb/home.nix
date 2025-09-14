@@ -17,13 +17,6 @@
     dunst
   '';
 in {
-  nixpkgs = {
-    overlays = [
-      inputs.nur.overlay
-    ];
-    config.allowUnfree = true;
-  };
-
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "daneb";
@@ -136,7 +129,7 @@ in {
       };
       search = {
         force = true;
-        default = "DuckDuckGo";
+        default = "ddg"; # DuckDuckGo
         engines = {
           "Nix Packages" = {
             urls = [
@@ -158,16 +151,16 @@ in {
             definedAliases = ["@np"];
           };
           "NixOS Wiki" = {
-            urls = [{template = "https://nixos.wiki/index.php?search={searchTerms}";}];
-            iconUpdateURL = "https://nixos.wiki/favicon.png";
+            urls = [{template = "https://wiki.nixos.org/w/index.php?search={searchTerms}";}];
+            icon = "https://nixos.wiki/favicon.png";
             updateInterval = 2 * 24 * 60 * 60 * 1000; # every 2 days
             definedAliases = ["@nw"];
           };
-          "Bing".metaData.alias = "@b"; # builtin engines only support specifying one additional alias
-          "Wikipedia (en)".metaData.alias = "@w";
+          "bing".metaData.alias = "@b"; # builtin engines only support specifying one additional alias
+          "wikipedia".metaData.alias = "@w";
         };
       };
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         # explore using; nix flake show "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons"
         darkreader
         onepassword-password-manager
@@ -186,7 +179,7 @@ in {
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
-    userSettings = {
+    profiles.default.userSettings = {
       "editor.formatOnSave" = true;
       "prettier.singleAttributePerLine" = true;
       "workbench.colorTheme" = "Stylix";

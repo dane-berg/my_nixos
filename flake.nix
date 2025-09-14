@@ -49,12 +49,12 @@
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
+            {nixpkgs.overlays = [inputs.nur.overlays.default];}
             ./hosts/erebus/configuration.nix
             home-manager.nixosModules.home-manager
             {
-              # TODO: move overlays out of home-manager and turn on these settings
-              # home-manager.useGlobalPkgs = true;
-              # home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
               home-manager.backupFileExtension = "hm-backup";
@@ -72,12 +72,12 @@
         nixpkgs.lib.nixosSystem {
           inherit specialArgs;
           modules = [
+            {nixpkgs.overlays = [inputs.nur.overlays.default];}
             ./hosts/castor/configuration.nix
             home-manager.nixosModules.home-manager
             {
-              # TODO: move overlays out of home-manager and turn on these settings
-              # home-manager.useGlobalPkgs = true;
-              # home-manager.useUserPackages = true;
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
               home-manager.extraSpecialArgs = specialArgs;
               home-manager.users.${username} = import ./users/${username}/home.nix;
               home-manager.backupFileExtension = "hm-backup";

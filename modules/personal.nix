@@ -5,14 +5,16 @@
   ...
 }: {
   # Enable systemwide dark mode with stylix
-  stylix.enable = true;
-  stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+  stylix = {
+    enable = true;
+    base16Scheme = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+  };
 
   environment.shellAliases = {
     subl = "sublime";
   };
 
-  programs.firefox.enable = false;
+  programs.firefox.enable = false; # disable because we install librewolf (in home.nix)
 
   environment.systemPackages = with pkgs; [
     google-chrome
