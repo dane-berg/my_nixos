@@ -18,7 +18,7 @@
     curl
     nest-cli
     nodejs
-    python3
+    python313
     sqlite
     yarn
   ];

@@ -32,7 +32,7 @@
       dunst
       swww
       kitty
-      rofi-wayland
+      rofi
       networkmanagerapplet
       kdePackages.dolphin
       grim
