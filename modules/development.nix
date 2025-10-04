@@ -20,6 +20,7 @@
     nodejs
     python313
     sqlite
+    typescript
     yarn
   ];
 
