@@ -32,5 +32,6 @@
     wineWowPackages.stable
     lutris
     prismlauncher
+    temurin-bin
   ];
 }
