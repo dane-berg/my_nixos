@@ -16,6 +16,8 @@
     ../../modules/personal.nix
   ];
 
+  nix.settings.trusted-users = ["daneb"];
+
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
