@@ -4,6 +4,8 @@
   system,
   ...
 }: {
+  hardware.bluetooth.enable = true;
+
   # Enable systemwide dark mode with stylix
   stylix = {
     enable = true;
@@ -23,5 +25,6 @@
     gimp-with-plugins
     libreoffice
     obsidian
+    blueberry
   ];
 }
