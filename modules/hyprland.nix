@@ -8,6 +8,7 @@
     enable = true;
     xwayland.enable = true;
     package = inputs.hyprland.packages."${system}".hyprland;
+    # portalPackage = inputs.hyprland.packages."${system}".xdg-desktop-portal-hyprland;
   };
 
   environment = {
@@ -16,6 +17,7 @@
       WLR_NO_HARDWARE_CURSORS = "1";
       # Hint electron apps to use wayland
       NIXOS_OZONE_WL = "1";
+      # ELECTRON_OZONE_PLATFORM_HINT = "wayland";
     };
 
     shellAliases = {
@@ -32,6 +34,8 @@
       kdePackages.dolphin
       grim
       hyprshot
+      pamixer
+      pavucontrol # volume control
     ];
   };
 
