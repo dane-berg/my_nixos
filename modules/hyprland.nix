@@ -24,11 +24,6 @@
     };
 
     systemPackages = with pkgs; [
-      (
-        waybar.overrideAttrs (oldAttrs: {
-          mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
-        })
-      )
       dunst
       swww
       kitty
@@ -39,6 +34,11 @@
       hyprshot
     ];
   };
+
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    jetbrains-mono
+  ];
 
   hardware = {
     graphics.enable = true;
