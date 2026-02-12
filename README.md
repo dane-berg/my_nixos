@@ -43,6 +43,8 @@ nano hosts/erebus/configuration.nix # import the core module & a desktop manager
 +   ../../modules/gnome.nix
   ];
 
++ nix.settings.trusted-users = ["daneb"]; # you can omit this until you setup your user
+
 - networking.hostName = "nixos";
 + networking.hostName = "erebus";
 
