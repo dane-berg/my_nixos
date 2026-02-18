@@ -24,6 +24,7 @@
     libnotify
     neofetch
     shfmt
+    appimage-run
   ];
 
   programs._1password.enable = true;
