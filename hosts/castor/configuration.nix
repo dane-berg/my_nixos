@@ -12,6 +12,7 @@
     ../../modules/core.nix
     ../../modules/gnome.nix
     ../../modules/development.nix
+    ../../modules/gamedev.nix
     ../../modules/gaming.nix
     ../../modules/personal.nix
   ];

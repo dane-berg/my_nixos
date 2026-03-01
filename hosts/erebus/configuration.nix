@@ -14,6 +14,7 @@
     ../../modules/gnome.nix
     ../../modules/development.nix
     ../../modules/personal.nix
+    ../../modules/gamedev.nix
   ];
 
   # Bootloader.
